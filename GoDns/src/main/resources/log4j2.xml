@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="info">
+    <Properties>
+        <Property name="pattern">%d{yyyy-MM-dd HH:mm:ss} |%X{tid}|%5p|[%t]|%c{1}:%L.%M|>>>> %m%n</Property>
+        <Property name="displayName">go-dns</Property>
+        <Property name="logPath">./logs/go-dns</Property>
+    </Properties>
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout>
+                <pattern>${pattern}</pattern>
+            </PatternLayout>
+        </Console>
+        <File name="error" fileName="${logPath}/${displayName}_error.log" append="false">
+            <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY" />
+            <PatternLayout>
+                <pattern>${pattern}</pattern>
+            </PatternLayout>
+        </File>
+        <RollingFile name="rollingFile" fileName="${logPath}/${displayName}.log" filePattern="${logPath}/${displayName}_%d{yyyy-MM-dd}_%i.log">
+            <PatternLayout>
+                <pattern>${pattern}</pattern>
+            </PatternLayout>
+            <SizeBasedTriggeringPolicy size="100 MB" />
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="error"/>
+            <AppenderRef ref="rollingFile"/>
+        </Root>
+    </Loggers>
+</configuration>

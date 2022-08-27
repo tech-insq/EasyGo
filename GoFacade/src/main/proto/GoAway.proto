@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package com.eg.gofacade.dto;
+
+option java_package = "com.eg.gofacade.dto";
+option java_multiple_files = true;
+
+service GoService{
+   rpc hello(HelloRequest) returns(GoResponse);
+   rpc ask(AskRequest) returns(stream GoResponse);
+   rpc talk(stream TalkRequest) returns(stream GoResponse);
+   rpc bye(ByeRequest) returns(GoResponse);
+}
+
+enum GoStatus{
+  ST_START = 0;
+  ST_OK = 200;
+  ST_BAD = 400;
+  ST_GONE = 410;
+  ST_INNER_ERR = 500;
+  ST_BAD_G = 502;
+  ST_SRV_UA = 503;
+  ST_GW_TO = 504;
+}
+
+message HelloRequest{
+    string cid  = 1;
+    string word = 2;
+}
+
+message AskRequest{
+    string cid  = 1;
+    string host = 2;
+    int32  port = 3;
+}
+
+message TalkRequest{
+    string cid  = 1;
+    int32  seq = 2;
+    bytes  data = 3;
+}
+
+message ByeRequest{
+    string cid  = 1;
+}
+
+message GoResponse{
+    string cid = 1;
+    int32 status = 2;
+    bytes  data = 3;
+}

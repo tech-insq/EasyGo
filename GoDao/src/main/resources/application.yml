@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: "GoDao"
+
+easy:
+  go:
+    local: false
+    remote:
+      host: wogo.com
+      port: 8443
+      certPath: "./tls"
